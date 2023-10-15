@@ -1,15 +1,31 @@
 import pickle
 
-import matplotlib.pyplot as plt
-import numpy as np
 import pandas as pd
-from sklearn.model_selection import train_test_split
+import pydotplus
+from sklearn.metrics import classification_report, precision_score
+from sklearn.model_selection import train_test_split, cross_val_score
 from sklearn.preprocessing import LabelEncoder
-from sklearn.tree import DecisionTreeRegressor, plot_tree
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.tree import export_graphviz
+from sklearn.model_selection import KFold
+
+
+def categorize_sleep_efficiency(efficiency):
+    if efficiency < 0.7:
+        return 'Low Efficiency'
+    elif 0.7 <= efficiency < 0.85:
+        return 'Medium Efficiency'
+    else:
+        return 'High Efficiency'
+
+
+def extract_hour_and_minutes(data, column_name):
+    bedtime = pd.to_datetime(data[column_name])
+    return bedtime.dt.hour + bedtime.dt.minute / 60.0
 
 
 def preprocessing():
-    data = pd.read_csv("Sleep_Efficiency.csv")
+    data = pd.read_csv("../Sleep_Efficiency.csv")
     # Remocao da Coluna ID
     data = data.drop('ID', axis=1)
 
@@ -21,15 +37,15 @@ def preprocessing():
     data['Wakeup time'] = pd.to_datetime(data['Wakeup time'])
 
     # Crie as características de hora e minuto para "Bedtime"
-    data['Bedtime_hour'] = data['Bedtime'].dt.hour
-    data['Bedtime_minute'] = data['Bedtime'].dt.minute
+    data['Bedtime_hour_minute'] = extract_hour_and_minutes(data, "Bedtime")
 
     # Crie as características de hora e minuto para "Wakeup time"
-    data['Wakeup_hour'] = data['Wakeup time'].dt.hour
-    data['Wakeup_minute'] = data['Wakeup time'].dt.minute
+    data['Wakeup_hour_minute'] = extract_hour_and_minutes(data, "Wakeup time")
 
     # Drop as colunas originais, se desejar
     data = data.drop(columns=['Bedtime', 'Wakeup time'])
+
+    data['Sleep efficiency Category'] = data['Sleep efficiency'].apply(categorize_sleep_efficiency)
 
     le_gender = LabelEncoder()
     le_smoking_status = LabelEncoder()
@@ -41,10 +57,12 @@ def preprocessing():
     data = data.drop_duplicates()
 
     x_train, x_test, y_train, y_test = train_test_split(
-        data.drop(columns=["Sleep efficiency"]),
-        data["Sleep efficiency"],
+        data.drop(columns=["Sleep efficiency", "Sleep efficiency Category"]),
+        data["Sleep efficiency Category"],
         test_size=0.3,
     )
+
+    print(x_train.columns.to_list())
 
     # Salvando os conjuntos de dados em um arquivo pickle
     with open("sleep_train_test.pkl", "wb") as f:
@@ -52,22 +70,24 @@ def preprocessing():
 
 
 def train_decision_tree(x_train, y_train):
-    model = DecisionTreeRegressor()
+    model = DecisionTreeClassifier()
     model.fit(x_train, y_train)
     return model
 
 
-def evaluate_model(model, x_test, y_test):
-    predictions = model.predict(x_test)
-    mse = np.mean((predictions - y_test) ** 2)
-    print(f"Mean Squared Error: {mse}")
-    return mse
-
-
 def visualize_tree(model, feature_names):
-    plt.figure(figsize=(20, 10))
-    plot_tree(model, filled=True, feature_names=feature_names, rounded=True, fontsize=10)
-    plt.show()
+    dot_data = export_graphviz(
+        model,
+        out_file=None,
+        feature_names=feature_names,
+        class_names=["Low Efficiency", "Medium Efficiency", "High Efficiency"],
+        filled=True,
+        rounded=True
+    )
+    graph = pydotplus.graph_from_dot_data(dot_data)
+    graph.write_png(f"{model.__class__.__name__}_graph.png")
+
+
 
 
 if __name__ == '__main__':
@@ -75,11 +95,13 @@ if __name__ == '__main__':
     with open("sleep_train_test.pkl", "rb") as f:
         feature_names, x_train_data, x_test_data, y_train_data, y_test_data = pickle.load(f)
 
-    x_train = pd.DataFrame(x_train_data, columns=feature_names)
-    x_test = pd.DataFrame(x_test_data, columns=feature_names)
-    y_train = pd.Series(y_train_data)
-    y_test = pd.Series(y_test_data)
+    tree_model = train_decision_tree(x_train_data, y_train_data)
 
-    tree_model = train_decision_tree(x_train, y_train)
-    evaluate_model(tree_model, x_test, y_test)
+    y_pred = tree_model.predict(x_test_data)
+
+    print("Classification Report:")
+    print(classification_report(y_test_data, y_pred))
+    # evaluate_model(tree_model, x_test_data, y_test_data)
+
+
     visualize_tree(tree_model, feature_names)
