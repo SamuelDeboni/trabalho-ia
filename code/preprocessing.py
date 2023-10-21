@@ -117,6 +117,8 @@ def feature_engineering(data):
 
     data['Sleep efficiency category'] = data['Sleep efficiency'].apply(categorize_sleep_efficiency)
 
+    data = data.drop(columns=["Sleep efficiency"])
+
     return data
 
 
@@ -156,6 +158,15 @@ def check_balance(data):
     print("total_count is ", total_count)
 
 
+def correlation(dataset):
+    correlation_matrix = dataset.corr(method='pearson')
+    print(correlation_matrix)
+
+    plt.figure(figsize=(16, 16))
+    sns.heatmap(correlation_matrix, annot=True, cmap='coolwarm', vmin=-1, vmax=1)
+    plt.show()
+
+
 def preprocessing():
     data = pd.read_csv("../Sleep_Efficiency.csv")
     print(f"Quantidade de instâncias antes do pré-processamento: {data.shape[0]}")
@@ -165,31 +176,25 @@ def preprocessing():
 
     # Caso haja duplicados, remova-os
     data = data.drop_duplicates()
-
     data = feature_engineering(data)
-
     data = handle_missing_values(data)
-
     data = remove_outliers(data)
 
     check_balance(data)
-    data = feature_scaling(data)
 
-    data.to_csv("test.csv")
+    # Remove features que possuem correlação com alguma outra feature
+    data = data.drop(columns=["Light sleep percentage", "Wakeup_hour_minute", "Deep sleep percentage"])
+
+    correlation(data.drop(columns=[]))
+
+    # data = feature_scaling(data)
 
     x_train, x_test, y_train, y_test = train_test_split(
-        data.drop(columns=["Sleep efficiency", "Sleep efficiency category"]),
+        data.drop(columns=["Sleep efficiency category"]),
         data["Sleep efficiency category"],
         test_size=0.3,
         random_state=20
     )
-
-    correlation_matrix = x_train.corr(method='pearson')
-    print(correlation_matrix)
-
-    plt.figure(figsize=(15, 15))
-    sns.heatmap(correlation_matrix, annot=True, cmap='coolwarm', vmin=-1, vmax=1)
-    plt.show()
 
     print(f"Quantidade de instâncias após o pré-processamento: {data.shape[0]}")
 
