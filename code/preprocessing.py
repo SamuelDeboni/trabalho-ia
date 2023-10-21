@@ -80,9 +80,9 @@ def categorize_sleep_efficiency(efficiency):
     - float: 0.0 for 'Low Efficiency', 0.5 for 'Medium Efficiency', and 1.0 for 'High Efficiency'.
 
     """
-    if efficiency < 0.7:
+    if efficiency <= 0.75:
         return 0  # Corresponds to 'Low Efficiency'
-    elif 0.7 <= efficiency < 0.85:
+    elif efficiency < 0.9:
         return 1  # Corresponds to 'Medium Efficiency'
     else:
         return 2  # Corresponds to 'High Efficiency'
@@ -142,6 +142,19 @@ def feature_scaling(data):
 def feature_reduction(data):
     pass
 
+def check_balance(data):
+    class_count = [0, 0, 0]
+    total_count = 0
+
+    for c in data['Sleep efficiency category']:
+        class_count[int(c)] += 1
+        total_count += 1
+
+    print("Low     efficiency count is ", class_count[0])
+    print("Medium  efficiency count is ", class_count[1])
+    print("High    efficiency count is ", class_count[2])
+    print("total_count is ", total_count)
+
 
 def preprocessing():
     data = pd.read_csv("../Sleep_Efficiency.csv")
@@ -158,6 +171,8 @@ def preprocessing():
     data = handle_missing_values(data)
 
     data = remove_outliers(data)
+
+    check_balance(data)
     data = feature_scaling(data)
 
     data.to_csv("test.csv")
