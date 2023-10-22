@@ -1,0 +1,200 @@
+[
+    {
+        "rule": "Awakenings <= 1.9 AND Awakenings <= 0.5",
+        "predicted_class": 1,
+        "coverage": 0.19,
+        "samples": 56
+    },
+    {
+        "rule": "Awakenings <= 1.9 AND Awakenings > 0.5 AND Exercise frequency > 1.4 AND Smoking status <= 0.5 AND Alcohol consumption <= 1.5",
+        "predicted_class": 1,
+        "coverage": 0.09,
+        "samples": 27
+    },
+    {
+        "rule": "Awakenings > 1.9 AND Alcohol consumption > 0.5 AND Smoking status > 0.5",
+        "predicted_class": 0,
+        "coverage": 0.09,
+        "samples": 27
+    },
+    {
+        "rule": "Awakenings > 1.9 AND Alcohol consumption > 0.5 AND Smoking status <= 0.5 AND Exercise frequency <= 1.5 AND REM sleep percentage > 21.0",
+        "predicted_class": 0,
+        "coverage": 0.05,
+        "samples": 16
+    },
+    {
+        "rule": "Awakenings <= 1.9 AND Awakenings > 0.5 AND Exercise frequency <= 1.4 AND Alcohol consumption <= 1.5 AND Age > 27.5 AND REM sleep percentage <= 22.5",
+        "predicted_class": 1,
+        "coverage": 0.04,
+        "samples": 12
+    },
+    {
+        "rule": "Awakenings <= 1.9 AND Awakenings > 0.5 AND Exercise frequency <= 1.4 AND Alcohol consumption > 1.5",
+        "predicted_class": 0,
+        "coverage": 0.04,
+        "samples": 12
+    },
+    {
+        "rule": "Awakenings <= 1.9 AND Awakenings > 0.5 AND Exercise frequency > 1.4 AND Smoking status <= 0.5 AND Alcohol consumption > 1.5 AND Alcohol consumption > 2.1",
+        "predicted_class": 1,
+        "coverage": 0.04,
+        "samples": 13
+    },
+    {
+        "rule": "Awakenings <= 1.9 AND Awakenings > 0.5 AND Exercise frequency > 1.4 AND Smoking status <= 0.5 AND Alcohol consumption > 1.5 AND Alcohol consumption <= 2.1",
+        "predicted_class": 1,
+        "coverage": 0.03,
+        "samples": 8
+    },
+    {
+        "rule": "Awakenings <= 1.9 AND Awakenings > 0.5 AND Exercise frequency > 1.4 AND Smoking status > 0.5 AND Alcohol consumption <= 0.5 AND Caffeine consumption > 5.0",
+        "predicted_class": 1,
+        "coverage": 0.03,
+        "samples": 9
+    },
+    {
+        "rule": "Awakenings <= 1.9 AND Awakenings > 0.5 AND Exercise frequency <= 1.4 AND Alcohol consumption <= 1.5 AND Age <= 27.5 AND Caffeine consumption <= 37.5",
+        "predicted_class": 0,
+        "coverage": 0.02,
+        "samples": 6
+    },
+    {
+        "rule": "Awakenings <= 1.9 AND Awakenings > 0.5 AND Exercise frequency <= 1.4 AND Alcohol consumption <= 1.5 AND Age > 27.5 AND REM sleep percentage > 22.5 AND Bedtime_hour_minute <= 2.0 AND Caffeine consumption > 10.0",
+        "predicted_class": 0,
+        "coverage": 0.02,
+        "samples": 5
+    },
+    {
+        "rule": "Awakenings <= 1.9 AND Awakenings > 0.5 AND Exercise frequency <= 1.4 AND Alcohol consumption <= 1.5 AND Age > 27.5 AND REM sleep percentage > 22.5 AND Bedtime_hour_minute > 2.0",
+        "predicted_class": 1,
+        "coverage": 0.02,
+        "samples": 6
+    },
+    {
+        "rule": "Awakenings <= 1.9 AND Awakenings > 0.5 AND Exercise frequency > 1.4 AND Smoking status > 0.5 AND Alcohol consumption <= 0.5 AND Caffeine consumption <= 5.0",
+        "predicted_class": 0,
+        "coverage": 0.02,
+        "samples": 7
+    },
+    {
+        "rule": "Awakenings <= 1.9 AND Awakenings > 0.5 AND Exercise frequency > 1.4 AND Smoking status > 0.5 AND Alcohol consumption > 0.5",
+        "predicted_class": 0,
+        "coverage": 0.02,
+        "samples": 7
+    },
+    {
+        "rule": "Awakenings > 1.9 AND Alcohol consumption <= 0.5 AND Age <= 39.5 AND Awakenings <= 2.4 AND Age > 27.0",
+        "predicted_class": 1,
+        "coverage": 0.02,
+        "samples": 5
+    },
+    {
+        "rule": "Awakenings > 1.9 AND Alcohol consumption <= 0.5 AND Age <= 39.5 AND Awakenings > 2.4 AND REM sleep percentage > 18.5 AND Age <= 21.5",
+        "predicted_class": 1,
+        "coverage": 0.02,
+        "samples": 5
+    },
+    {
+        "rule": "Awakenings > 1.9 AND Alcohol consumption <= 0.5 AND Age > 39.5 AND Gender <= 0.5",
+        "predicted_class": 0,
+        "coverage": 0.02,
+        "samples": 7
+    },
+    {
+        "rule": "Awakenings > 1.9 AND Alcohol consumption <= 0.5 AND Age > 39.5 AND Gender > 0.5 AND Age <= 52.5 AND Exercise frequency <= 2.5 AND Age > 46.5",
+        "predicted_class": 0,
+        "coverage": 0.02,
+        "samples": 7
+    },
+    {
+        "rule": "Awakenings > 1.9 AND Alcohol consumption <= 0.5 AND Age > 39.5 AND Gender > 0.5 AND Age <= 52.5 AND Exercise frequency > 2.5",
+        "predicted_class": 0,
+        "coverage": 0.02,
+        "samples": 7
+    },
+    {
+        "rule": "Awakenings > 1.9 AND Alcohol consumption > 0.5 AND Smoking status <= 0.5 AND Exercise frequency <= 1.5 AND REM sleep percentage <= 21.0",
+        "predicted_class": 0,
+        "coverage": 0.02,
+        "samples": 5
+    },
+    {
+        "rule": "Awakenings > 1.9 AND Alcohol consumption > 0.5 AND Smoking status <= 0.5 AND Exercise frequency > 1.5 AND Awakenings > 2.5 AND Age <= 51.5",
+        "predicted_class": 1,
+        "coverage": 0.02,
+        "samples": 5
+    },
+    {
+        "rule": "Awakenings <= 1.9 AND Awakenings > 0.5 AND Exercise frequency <= 1.4 AND Alcohol consumption <= 1.5 AND Age <= 27.5 AND Caffeine consumption > 37.5",
+        "predicted_class": 0,
+        "coverage": 0.01,
+        "samples": 4
+    },
+    {
+        "rule": "Awakenings <= 1.9 AND Awakenings > 0.5 AND Exercise frequency <= 1.4 AND Alcohol consumption <= 1.5 AND Age > 27.5 AND REM sleep percentage > 22.5 AND Bedtime_hour_minute <= 2.0 AND Caffeine consumption <= 10.0",
+        "predicted_class": 1,
+        "coverage": 0.01,
+        "samples": 4
+    },
+    {
+        "rule": "Awakenings > 1.9 AND Alcohol consumption <= 0.5 AND Age <= 39.5 AND Awakenings <= 2.4 AND Age <= 27.0",
+        "predicted_class": 1,
+        "coverage": 0.01,
+        "samples": 4
+    },
+    {
+        "rule": "Awakenings > 1.9 AND Alcohol consumption <= 0.5 AND Age <= 39.5 AND Awakenings > 2.4 AND REM sleep percentage <= 18.5",
+        "predicted_class": 0,
+        "coverage": 0.01,
+        "samples": 4
+    },
+    {
+        "rule": "Awakenings > 1.9 AND Alcohol consumption <= 0.5 AND Age <= 39.5 AND Awakenings > 2.4 AND REM sleep percentage > 18.5 AND Age > 21.5 AND Smoking status <= 0.5 AND Caffeine consumption <= 37.5",
+        "predicted_class": 0,
+        "coverage": 0.01,
+        "samples": 4
+    },
+    {
+        "rule": "Awakenings > 1.9 AND Alcohol consumption <= 0.5 AND Age <= 39.5 AND Awakenings > 2.4 AND REM sleep percentage > 18.5 AND Age > 21.5 AND Smoking status <= 0.5 AND Caffeine consumption > 37.5",
+        "predicted_class": 0,
+        "coverage": 0.01,
+        "samples": 4
+    },
+    {
+        "rule": "Awakenings > 1.9 AND Alcohol consumption <= 0.5 AND Age <= 39.5 AND Awakenings > 2.4 AND REM sleep percentage > 18.5 AND Age > 21.5 AND Smoking status > 0.5",
+        "predicted_class": 1,
+        "coverage": 0.01,
+        "samples": 4
+    },
+    {
+        "rule": "Awakenings > 1.9 AND Alcohol consumption <= 0.5 AND Age > 39.5 AND Gender > 0.5 AND Age <= 52.5 AND Exercise frequency <= 2.5 AND Age <= 46.5",
+        "predicted_class": 1,
+        "coverage": 0.01,
+        "samples": 4
+    },
+    {
+        "rule": "Awakenings > 1.9 AND Alcohol consumption <= 0.5 AND Age > 39.5 AND Gender > 0.5 AND Age > 52.5 AND Exercise frequency <= 1.0",
+        "predicted_class": 0,
+        "coverage": 0.01,
+        "samples": 4
+    },
+    {
+        "rule": "Awakenings > 1.9 AND Alcohol consumption <= 0.5 AND Age > 39.5 AND Gender > 0.5 AND Age > 52.5 AND Exercise frequency > 1.0",
+        "predicted_class": 1,
+        "coverage": 0.01,
+        "samples": 4
+    },
+    {
+        "rule": "Awakenings > 1.9 AND Alcohol consumption > 0.5 AND Smoking status <= 0.5 AND Exercise frequency > 1.5 AND Awakenings <= 2.5",
+        "predicted_class": 0,
+        "coverage": 0.01,
+        "samples": 4
+    },
+    {
+        "rule": "Awakenings > 1.9 AND Alcohol consumption > 0.5 AND Smoking status <= 0.5 AND Exercise frequency > 1.5 AND Awakenings > 2.5 AND Age > 51.5",
+        "predicted_class": 0,
+        "coverage": 0.01,
+        "samples": 4
+    }
+]

@@ -80,12 +80,10 @@ def categorize_sleep_efficiency(efficiency):
     - float: 0.0 for 'Low Efficiency', 0.5 for 'Medium Efficiency', and 1.0 for 'High Efficiency'.
 
     """
-    if efficiency <= 0.75:
+    if efficiency < 0.8:
         return 0  # Corresponds to 'Low Efficiency'
-    elif efficiency < 0.9:
-        return 1  # Corresponds to 'Medium Efficiency'
     else:
-        return 2  # Corresponds to 'High Efficiency'
+        return 1  # Corresponds to 'High Efficiency'
 
 
 def feature_engineering(data):
@@ -98,6 +96,9 @@ def feature_engineering(data):
     Returns:
     - DataFrame: Data with new features and encoded values.
     """
+    # Remocao da Coluna ID
+    data = data.drop('ID', axis=1)
+
     # Convert string columns to datetime
     data['Bedtime'] = pd.to_datetime(data['Bedtime'])
     data['Wakeup time'] = pd.to_datetime(data['Wakeup time'])
@@ -122,27 +123,37 @@ def feature_engineering(data):
     return data
 
 
-def feature_scaling(data):
+def feature_scaling(data, exclude_columns=None):
     """
     Apply Min-Max scaling to the dataset.
 
     Parameters:
     - data (DataFrame): Input data.
+    - exclude_columns (list): List of column names to exclude from scaling.
 
     Returns:
     - DataFrame: Data after Min-Max scaling.
     """
+    # Check if exclude_columns is provided
+    if exclude_columns is None:
+        exclude_columns = []
+
+    # Separate the columns to be scaled and not to be scaled
+    data_to_scale = data.drop(columns=exclude_columns)
+    data_not_to_scale = data[exclude_columns]
+
     scaler = MinMaxScaler()
-    scaled_data = scaler.fit_transform(data)
+    scaled_data = scaler.fit_transform(data_to_scale)
 
     # Convert scaled data back to DataFrame
-    scaled_df = pd.DataFrame(scaled_data, columns=data.columns)
+    scaled_df = pd.DataFrame(scaled_data, columns=data_to_scale.columns)
 
-    return scaled_df
+    # Merge the scaled and not scaled data back together
+    result_df = pd.concat([scaled_df, data_not_to_scale], axis=1)
 
 
-def feature_reduction(data):
-    pass
+    return result_df
+
 
 def check_balance(data):
     class_count = [0, 0, 0]
@@ -153,8 +164,7 @@ def check_balance(data):
         total_count += 1
 
     print("Low     efficiency count is ", class_count[0])
-    print("Medium  efficiency count is ", class_count[1])
-    print("High    efficiency count is ", class_count[2])
+    print("High  efficiency count is ", class_count[1])
     print("total_count is ", total_count)
 
 
@@ -171,23 +181,20 @@ def preprocessing():
     data = pd.read_csv("../Sleep_Efficiency.csv")
     print(f"Quantidade de instâncias antes do pré-processamento: {data.shape[0]}")
 
-    # Remocao da Coluna ID
-    data = data.drop('ID', axis=1)
-
     # Caso haja duplicados, remova-os
     data = data.drop_duplicates()
     data = feature_engineering(data)
     data = handle_missing_values(data)
-    data = remove_outliers(data)
-
     check_balance(data)
+    data = remove_outliers(data)
+    print(f"Quantidade de instâncias apos remocao de outliers: {data.shape[0]}")
+    check_balance(data)
+    #data = feature_scaling(data, ["Sleep efficiency category"])
 
     # Remove features que possuem correlação com alguma outra feature
     data = data.drop(columns=["Light sleep percentage", "Wakeup_hour_minute", "Deep sleep percentage"])
 
     correlation(data.drop(columns=[]))
-
-    # data = feature_scaling(data)
 
     x_train, x_test, y_train, y_test = train_test_split(
         data.drop(columns=["Sleep efficiency category"]),

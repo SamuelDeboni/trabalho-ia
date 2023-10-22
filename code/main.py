@@ -8,8 +8,8 @@ import scipy.stats as st
 from sklearn.base import RegressorMixin
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import f1_score, precision_score, recall_score, make_scorer
-from sklearn.model_selection import GridSearchCV, KFold, cross_val_score
-from sklearn.tree import DecisionTreeClassifier
+from sklearn.model_selection import GridSearchCV, KFold, cross_val_score, RandomizedSearchCV
+from sklearn.tree import DecisionTreeClassifier, export_text, _tree
 from sklearn.tree import export_graphviz
 from yellowbrick import ROCAUC
 from yellowbrick.classifier import ConfusionMatrix, ClassificationReport, PrecisionRecallCurve
@@ -30,14 +30,14 @@ def cross_val(model, x_train, y_train, scorer):
 
 
 def compute_metrics(model, x_train, y_train):
-    precision_scorer_not_disease = make_scorer(precision_score, labels=[0], average='micro')
-    precision_scorer_disease = make_scorer(precision_score, labels=[2], average='micro')
+    precision_scorer_not_disease = make_scorer(precision_score, pos_label=0, average='binary')
+    precision_scorer_disease = make_scorer(precision_score, pos_label=1, average='binary')
 
-    recall_scorer_not_disease = make_scorer(recall_score, pos_label=0, average='micro')
-    recall_scorer_disease = make_scorer(recall_score, pos_label=1, average='micro')
+    recall_scorer_not_disease = make_scorer(recall_score, pos_label=0, average='binary')
+    recall_scorer_disease = make_scorer(recall_score, pos_label=1, average='binary')
 
-    f1_scorer_not_disease = make_scorer(f1_score, pos_label=0, average='micro')
-    f1_scorer_disease = make_scorer(f1_score, pos_label=1, average='micro')
+    f1_scorer_not_disease = make_scorer(f1_score, pos_label=0, average='binary')
+    f1_scorer_disease = make_scorer(f1_score, pos_label=1, average='binary')
 
     precision_not_disease_std, precision_not_disease_mean, precision_ic_not_disease, precision_not_disease_values = \
         cross_val(model, x_train, y_train, precision_scorer_not_disease)
@@ -139,6 +139,44 @@ def fit_and_evaluate(model, x_train, x_test, y_train, y_test, feature_names):
     return results_json
 
 
+def extract_rules_updated(tree, feature_names, total_samples):
+    tree_ = tree.tree_
+    feature_name = [
+        feature_names[i] if i != _tree.TREE_UNDEFINED else "undefined!"
+        for i in tree_.feature
+    ]
+
+    rules = []
+
+    def recurse(node, previous_rules):
+        if tree_.feature[node] != _tree.TREE_UNDEFINED:
+            name = feature_name[node]
+            threshold = tree_.threshold[node]
+
+            left_rules = previous_rules.copy()
+            left_rules.append(f"{name} <= {round(threshold, 2)}")
+            recurse(tree_.children_left[node], left_rules)
+
+            right_rules = previous_rules.copy()
+            right_rules.append(f"{name} > {round(threshold, 2)}")
+            recurse(tree_.children_right[node], right_rules)
+        else:
+            predicted_class = tree_.value[node].argmax()
+            if predicted_class is not None:
+                rules.append({
+                    "rule": " AND ".join(previous_rules),
+                    "predicted_class": int(predicted_class),
+                    "coverage": round(tree_.n_node_samples[node] / total_samples, 2),
+                    "samples": int(tree_.n_node_samples[node])
+                })
+
+    recurse(0, [])
+
+    rules = sorted(rules, key=lambda x: x['coverage'], reverse=True)
+
+    return rules
+
+
 def decision_tree_grid_search():
     # open train and test sets
     with open('sleep_train_test.pkl', 'rb') as f:
@@ -169,7 +207,18 @@ def decision_tree_grid_search():
 
         # Train a decision tree classifier on the training set
         dtc_model = DecisionTreeClassifier(**grid_search.best_params_, random_state=20)
-        return fit_and_evaluate(dtc_model, x_train, x_test, y_train, y_test, feature_names)
+
+        result = fit_and_evaluate(dtc_model, x_train, x_test, y_train, y_test, feature_names)
+
+        tree_rules = extract_rules_updated(dtc_model, feature_names, 300)
+
+        print(tree_rules)
+
+        # Salva as regras em formato JSON
+        with open("tree_rules.json", "w") as f:
+            json.dump(tree_rules, f, indent=4)
+
+        return result
 
 
 def decision_tree():
@@ -184,6 +233,50 @@ def decision_tree():
             random_state=20
         )
         return fit_and_evaluate(dtc_model, x_train, x_test, y_train, y_test, feature_names)
+
+
+def random_forest_grid_search():
+    # open train and test sets
+    with open('sleep_train_test.pkl', 'rb') as f:
+        feature_names, x_train, x_test, y_train, y_test = pickle.load(f)
+
+        # Define the hyperparameter grid
+        param_dist = {
+            'n_estimators': [10, 50, 100, 150, 200, 250, 300],
+            'max_features': ['log2', 'sqrt'],
+            'criterion': ['gini', 'entropy'],
+            'min_samples_leaf': range(2, 10),
+            'min_samples_split': range(2, 10),
+        }
+
+        # Perform grid search with 5-fold cross-validation
+        grid_search = RandomizedSearchCV(
+            RandomForestClassifier(random_state=0),
+            param_distributions=param_dist,
+            cv=5,
+            n_iter=100,
+            n_jobs=-1
+        )
+        grid_search.fit(x_train, y_train)
+
+        # Print the best hyperparameters and corresponding accuracy score
+        print(f"Best parameters for RandomFlorest: {grid_search.best_params_}")
+        print(f"Best accuracy score for RandomFlorest: {grid_search.best_score_}")
+
+        rfc_model = RandomForestClassifier(**grid_search.best_params_, random_state=0)
+        results = fit_and_evaluate(rfc_model, x_train, x_test, y_train, y_test, feature_names)
+
+        importances = rfc_model.feature_importances_
+
+        # Sort the features by importance in descending order
+        indices = importances.argsort()[::-1]
+
+        # Print the feature ranking
+        print("Feature ranking:")
+        for i in range(x_train.shape[1]):
+            print("%d. feature %s (%f)" % (i + 1, feature_names[indices[i]], importances[indices[i]]))
+
+        return results
 
 
 def random_forest():
@@ -219,7 +312,7 @@ def visualize_tree(model, feature_names):
         model,
         out_file=None,
         feature_names=feature_names,
-        class_names=["Low Efficiency", "Medium Efficiency", "High Efficiency"],
+        class_names=["Low Efficiency", "High Efficiency"],
         filled=True,
         rounded=True
     )
@@ -229,7 +322,8 @@ def visualize_tree(model, feature_names):
 
 if __name__ == '__main__':
     decision_tree_grid_search()
-# tree_results = decision_tree()
+    # tree_results = decision_tree()
+    #random_forest_grid_search()
 # forest_results = random_forest()
 #
 # results = [tree_results, forest_results]
