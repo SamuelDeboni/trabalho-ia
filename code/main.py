@@ -8,11 +8,17 @@ import scipy.stats as st
 from sklearn.base import RegressorMixin
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import f1_score, precision_score, recall_score, make_scorer
-from sklearn.model_selection import GridSearchCV, KFold, cross_val_score, RandomizedSearchCV
+from sklearn.model_selection import GridSearchCV, KFold, cross_val_score, RandomizedSearchCV, train_test_split
+from sklearn.neural_network import MLPClassifier
 from sklearn.tree import DecisionTreeClassifier, export_text, _tree
 from sklearn.tree import export_graphviz
 from yellowbrick import ROCAUC
 from yellowbrick.classifier import ConfusionMatrix, ClassificationReport, PrecisionRecallCurve
+import xgboost as xgb
+from xgboost import plot_importance
+from sklearn.datasets import load_iris
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import accuracy_score, classification_report
 
 
 # Function for calculating confidence interval from cross-validation
@@ -319,9 +325,48 @@ def visualize_tree(model, feature_names):
     graph = pydotplus.graph_from_dot_data(dot_data)
     graph.write_png(f"{model.__class__.__name__}_graph.png")
 
+def mpl():
+    with open('sleep_train_test.pkl', 'rb') as f:
+        feature_names, x_train, x_test, y_train, y_test = pickle.load(f)
+
+        mlp_model = MLPClassifier(hidden_layer_sizes={100, 50}, max_iter=1000, random_state=1)
+
+        return fit_and_evaluate(mlp_model, x_train, x_test, y_train, y_test, feature_names)
+
+def xgboost():
+    with open('sleep_train_test.pkl', 'rb') as f:
+        feature_names, x_train, x_test, y_train, y_test = pickle.load(f)
+
+        # Create a DMatrix for XGBoost
+        dtrain = xgb.DMatrix(x_train, label=y_train)
+        dtest = xgb.DMatrix(x_test, label=y_test)
+
+        # Define the XGBoost parameters
+        params = {
+            'objective': 'multi:softmax',  # For multiclass classification
+            'num_class': len(set(y_train)),  # Number of classes
+            'max_depth': 3,  # Maximum depth of trees
+            'learning_rate': 0.1,  # Learning rate
+            'n_estimators': 100  # Number of boosting rounds
+        }
+        model = xgb.train(params, dtrain)
+        y_pred = model.predict(dtest)
+        # Evaluate the model
+        accuracy = accuracy_score(y_test, y_pred)
+        print(f"Accuracy: {accuracy:.2f}")
+
+        # Generate a classification report
+        report = classification_report(y_test, y_pred)
+        print("Classification Report:\n", report)
+
+        # Plot feature importance (if needed)
+        plot_importance(model)
+
 
 if __name__ == '__main__':
-    decision_tree_grid_search()
+    #decision_tree_grid_search()
+    #mpl()
+    xgboost()
     # tree_results = decision_tree()
     #random_forest_grid_search()
 # forest_results = random_forest()
