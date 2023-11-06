@@ -5,20 +5,17 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pydotplus
 import scipy.stats as st
-from sklearn.base import RegressorMixin
+import xgboost as xgb
+from scipy.stats import randint
 from sklearn.ensemble import RandomForestClassifier
+from sklearn.inspection import permutation_importance
 from sklearn.metrics import f1_score, precision_score, recall_score, make_scorer
-from sklearn.model_selection import GridSearchCV, KFold, cross_val_score, RandomizedSearchCV, train_test_split
+from sklearn.model_selection import GridSearchCV, KFold, cross_val_score, RandomizedSearchCV
 from sklearn.neural_network import MLPClassifier
-from sklearn.tree import DecisionTreeClassifier, export_text, _tree
+from sklearn.tree import DecisionTreeClassifier, _tree
 from sklearn.tree import export_graphviz
 from yellowbrick import ROCAUC
 from yellowbrick.classifier import ConfusionMatrix, ClassificationReport, PrecisionRecallCurve
-import xgboost as xgb
-from xgboost import plot_importance
-from sklearn.datasets import load_iris
-from sklearn.model_selection import train_test_split
-from sklearn.metrics import accuracy_score, classification_report
 
 
 # Function for calculating confidence interval from cross-validation
@@ -36,55 +33,55 @@ def cross_val(model, x_train, y_train, scorer):
 
 
 def compute_metrics(model, x_train, y_train):
-    precision_scorer_not_disease = make_scorer(precision_score, pos_label=0, average='binary')
-    precision_scorer_disease = make_scorer(precision_score, pos_label=1, average='binary')
+    precision_scorer_low_efficiency = make_scorer(precision_score, pos_label=0, average='binary')
+    precision_scorer_high_efficiency = make_scorer(precision_score, pos_label=1, average='binary')
 
-    recall_scorer_not_disease = make_scorer(recall_score, pos_label=0, average='binary')
-    recall_scorer_disease = make_scorer(recall_score, pos_label=1, average='binary')
+    recall_scorer_low_efficiency = make_scorer(recall_score, pos_label=0, average='binary')
+    recall_scorer_high_efficiency = make_scorer(recall_score, pos_label=1, average='binary')
 
-    f1_scorer_not_disease = make_scorer(f1_score, pos_label=0, average='binary')
-    f1_scorer_disease = make_scorer(f1_score, pos_label=1, average='binary')
+    f1_scorer_low_efficiency = make_scorer(f1_score, pos_label=0, average='binary')
+    f1_scorer_high_efficiency = make_scorer(f1_score, pos_label=1, average='binary')
 
-    precision_not_disease_std, precision_not_disease_mean, precision_ic_not_disease, precision_not_disease_values = \
-        cross_val(model, x_train, y_train, precision_scorer_not_disease)
-    precision_disease_std, precision_disease_mean, precision_ic_disease, precision_disease_values = \
-        cross_val(model, x_train, y_train, precision_scorer_disease)
+    precision_low_efficiency_std, precision_low_efficiency_mean, precision_ic_low_efficiency, precision_low_efficiency_values = \
+        cross_val(model, x_train, y_train, precision_scorer_low_efficiency)
+    precision_high_efficiency_std, precision_high_efficiency_mean, precision_ic_high_efficiency, precision_high_efficiency_values = \
+        cross_val(model, x_train, y_train, precision_scorer_high_efficiency)
 
-    recall_not_disease_std, recall_not_disease_mean, recall_ic_not_disease, recall_not_disease_values = \
-        cross_val(model, x_train, y_train, recall_scorer_not_disease)
-    recall_disease_std, recall_disease_mean, recall_ic_disease, recall_disease_values = \
-        cross_val(model, x_train, y_train, recall_scorer_disease)
+    recall_low_efficiency_std, recall_low_efficiency_mean, recall_ic_low_efficiency, recall_low_efficiency_values = \
+        cross_val(model, x_train, y_train, recall_scorer_low_efficiency)
+    recall_high_efficiency_std, recall_high_efficiency_mean, recall_ic_high_efficiency, recall_high_efficiency_values = \
+        cross_val(model, x_train, y_train, recall_scorer_high_efficiency)
 
-    f1_not_disease_std, f1_not_disease_mean, f1_ic_not_disease, f1_not_disease_values = \
-        cross_val(model, x_train, y_train, f1_scorer_not_disease)
-    f1_disease_std, f1_disease_mean, f1_ic_disease, f1_disease_values = \
-        cross_val(model, x_train, y_train, f1_scorer_disease)
+    f1_low_efficiency_std, f1_low_efficiency_mean, f1_ic_low_efficiency, f1_low_efficiency_values = \
+        cross_val(model, x_train, y_train, f1_scorer_low_efficiency)
+    f1_high_efficiency_std, f1_high_efficiency_mean, f1_ic_high_efficiency, f1_high_efficiency_values = \
+        cross_val(model, x_train, y_train, f1_scorer_high_efficiency)
 
     metrics = {
-        'precision_not_disease_values': precision_not_disease_values.tolist(),
-        'precision_not_disease_std': precision_not_disease_std,
-        'precision_not_disease_mean': precision_not_disease_mean,
-        'precision_not_disease_ic': precision_ic_not_disease,
-        'precision_disease_values': precision_disease_values.tolist(),
-        'precision_disease_std': precision_disease_std,
-        'precision_disease_mean': precision_disease_mean,
-        'precision_disease_ic': precision_ic_disease,
-        'recall_not_disease_values': recall_not_disease_values.tolist(),
-        'recall_not_disease_std': recall_not_disease_std,
-        'recall_not_disease_mean': recall_not_disease_mean,
-        'recall_not_disease_ic': recall_ic_not_disease,
-        'recall_disease_values': recall_disease_values.tolist(),
-        'recall_disease_std': recall_disease_std,
-        'recall_disease_mean': recall_disease_mean,
-        'recall_disease_ic': recall_ic_disease,
-        'f1_not_disease_values': f1_not_disease_values.tolist(),
-        'f1_not_disease_std': f1_not_disease_std,
-        'f1_not_disease_mean': f1_not_disease_mean,
-        'f1_not_disease_ic': f1_ic_not_disease,
-        'f1_disease_values': f1_disease_values.tolist(),
-        'f1_disease_std': f1_disease_std,
-        'f1_disease_mean': f1_disease_mean,
-        'f1_disease_ic': f1_ic_disease
+        'precision_low_efficiency_values': precision_low_efficiency_values.tolist(),
+        'precision_low_efficiency_std': precision_low_efficiency_std,
+        'precision_low_efficiency_mean': precision_low_efficiency_mean,
+        'precision_low_efficiency_ic': precision_ic_low_efficiency,
+        'precision_high_efficiency_values': precision_high_efficiency_values.tolist(),
+        'precision_high_efficiency_std': precision_high_efficiency_std,
+        'precision_high_efficiency_mean': precision_high_efficiency_mean,
+        'precision_high_efficiency_ic': precision_ic_high_efficiency,
+        'recall_low_efficiency_values': recall_low_efficiency_values.tolist(),
+        'recall_low_efficiency_std': recall_low_efficiency_std,
+        'recall_low_efficiency_mean': recall_low_efficiency_mean,
+        'recall_low_efficiency_ic': recall_ic_low_efficiency,
+        'recall_high_efficiency_values': recall_high_efficiency_values.tolist(),
+        'recall_high_efficiency_std': recall_high_efficiency_std,
+        'recall_high_efficiency_mean': recall_high_efficiency_mean,
+        'recall_high_efficiency_ic': recall_ic_high_efficiency,
+        'f1_low_efficiency_values': f1_low_efficiency_values.tolist(),
+        'f1_low_efficiency_std': f1_low_efficiency_std,
+        'f1_low_efficiency_mean': f1_low_efficiency_mean,
+        'f1_low_efficiency_ic': f1_ic_low_efficiency,
+        'f1_high_efficiency_values': f1_high_efficiency_values.tolist(),
+        'f1_high_efficiency_std': f1_high_efficiency_std,
+        'f1_high_efficiency_mean': f1_high_efficiency_mean,
+        'f1_high_efficiency_ic': f1_ic_high_efficiency
     }
 
     return metrics
@@ -93,17 +90,14 @@ def compute_metrics(model, x_train, y_train):
 def fit_and_evaluate(model, x_train, x_test, y_train, y_test, feature_names):
     model.fit(x_train, y_train)
 
-    if isinstance(model, RegressorMixin):
-        print("Oh yeah")
-
     test_score = model.score(x_test, y_test)
     print(f"Test score {model.__class__.__name__}", test_score)
     metrics = compute_metrics(model, x_train, y_train)
     y_pred = model.predict(x_test)
 
-    precision = precision_score(y_test, y_pred, average='micro')
-    recall = recall_score(y_test, y_pred, average='micro')
-    f1 = f1_score(y_test, y_pred, average='micro')
+    precision = precision_score(y_test, y_pred)
+    recall = recall_score(y_test, y_pred)
+    f1 = f1_score(y_test, y_pred)
 
     # accuracy = accuracy_score(y_test, y_pred)
 
@@ -306,7 +300,7 @@ def random_forest():
         indices = importances.argsort()[::-1]
 
         # Print the feature ranking
-        print("Feature ranking:")
+        print("RandomForest Feature ranking:")
         for i in range(x_train.shape[1]):
             print("%d. feature %s (%f)" % (i + 1, feature_names[indices[i]], importances[indices[i]]))
 
@@ -325,54 +319,215 @@ def visualize_tree(model, feature_names):
     graph = pydotplus.graph_from_dot_data(dot_data)
     graph.write_png(f"{model.__class__.__name__}_graph.png")
 
-def mpl():
+
+def mlp_random_search():
     with open('sleep_train_test.pkl', 'rb') as f:
         feature_names, x_train, x_test, y_train, y_test = pickle.load(f)
 
-        mlp_model = MLPClassifier(hidden_layer_sizes={100, 50}, max_iter=1000, random_state=1)
+    # Defina o espaço de parâmetros para a busca aleatória
+    param_distributions = {
+        'hidden_layer_sizes': [(50,), (100,), (50, 50), (100, 100), (50, 50, 50), (100, 100, 100)],
+        'activation': ['tanh', 'relu'],
+        'solver': ['sgd', 'adam'],
+        'alpha': [0.0001, 0.001, 0.01],
+        'learning_rate_init': [0.0001, 0.001, 0.01, 0.1],
+        'max_iter': randint(400, 800),  # Increased max_iter range
+        'early_stopping': [True, False],  # Include early stopping
+        # Include momentum for sgd
+        'momentum': [0.9, 0.95, 0.99] if 'solver' == 'sgd' else [0.0]  # Only for sgd solver
+    }
 
-        return fit_and_evaluate(mlp_model, x_train, x_test, y_train, y_test, feature_names)
+    # Inicialize o MLPClassifier
+    mlp = MLPClassifier()
+
+    # Configurar o RandomizedSearchCV
+    random_search = RandomizedSearchCV(
+        mlp,
+        param_distributions=param_distributions,
+        n_iter=300,  # Número de iterações da busca aleatória
+        cv=20,  # Número de folds na validação cruzada
+        verbose=2,  # Para mensagens detalhadas
+        random_state=42,
+        n_jobs=-1  # Usa todos os núcleos da CPU
+    )
+
+    # Execute a busca com seus dados de treinamento (X_train, y_train)
+    random_search.fit(x_train, y_train)
+
+    # Mostre os melhores parâmetros e o desempenho do melhor modelo
+    print("Melhores parâmetros:", random_search.best_params_)
+    print("Melhor pontuação:", random_search.best_score_)
+
+
+def mlp():
+    with open('sleep_train_test.pkl', 'rb') as f:
+        feature_names, x_train, x_test, y_train, y_test = pickle.load(f)
+
+        mlp_model = MLPClassifier(
+            hidden_layer_sizes={50},
+            max_iter=683,
+            activation='tanh',
+            alpha=0.01,
+            learning_rate_init=0.01,
+            solver='adam',
+            random_state=1
+        )
+
+    result = fit_and_evaluate(mlp_model, x_train, x_test, y_train, y_test, feature_names)
+
+    results = permutation_importance(mlp_model, x_test, y_test, n_repeats=10, random_state=42)
+
+    # Organizar os resultados e imprimir a importância das características
+    print("MLP Feature ranking:")
+    importance = results.importances_mean
+    for i in range(x_train.shape[1]):
+        print(f"Feature {feature_names[i]}: {importance[i]:.3}")
+
+    return result
+
+
+def xgboost_random_search():
+    with open('sleep_train_test.pkl', 'rb') as f:
+        feature_names, x_train, x_test, y_train, y_test = pickle.load(f)
+
+        param_dist = {
+            'max_depth': [3, 5, 7, 9],
+            'learning_rate': [0.01, 0.1, 0.2],
+            'n_estimators': [50, 100, 200],
+            'subsample': [0.5, 0.7, 1.0],
+            'colsample_bytree': [0.3, 0.7, 1.0],  # Fração de colunas a serem usadas por árvore
+            'min_child_weight': [1, 3, 5],  # Peso mínimo necessário para criar um novo nó na árvore
+            'gamma': [0, 0.1, 0.2],  # Parâmetro de poda da árvore
+            'reg_alpha': [0, 0.1, 1],  # Regularização L1
+            'reg_lambda': [1, 1.5, 2],  # Regularização L2
+        }
+
+        xgb_model = xgb.XGBClassifier(objective='multi:softmax', num_class=len(set(y_train)))
+
+        grid_search = RandomizedSearchCV(
+            xgb_model,
+            param_distributions=param_dist,
+            cv=30,
+            n_iter=300,
+            scoring='accuracy',
+            n_jobs=-1
+        )
+
+        grid_search.fit(x_train, y_train)
+
+        print("Best hyperparameters for XGBoost:", grid_search.best_params_)
+        print("Best score for XGBoost:", grid_search.best_score_)
+
+        # Avaliar o modelo com as melhores configurações
+        best_xgb = xgb.XGBClassifier(**grid_search.best_params_)
+        best_xgb.fit(x_train, y_train)
+
+        return fit_and_evaluate(best_xgb, x_train, x_test, y_train, y_test, feature_names)
+
 
 def xgboost():
     with open('sleep_train_test.pkl', 'rb') as f:
         feature_names, x_train, x_test, y_train, y_test = pickle.load(f)
 
-        # Create a DMatrix for XGBoost
-        dtrain = xgb.DMatrix(x_train, label=y_train)
-        dtest = xgb.DMatrix(x_test, label=y_test)
+        xgb_model = xgb.XGBClassifier(
+            objective='multi:softmax',
+            num_class=len(set(y_train)),
+            colsample_bytree=0.7,
+            gamma=0,
+            learning_rate=0.1,
+            max_depth=5,
+            min_child_weight=1,
+            n_estimators=50,
+            reg_alpha=0.1,
+            reg_lambda=1,
+            subsample=0.7,
 
-        # Define the XGBoost parameters
-        params = {
-            'objective': 'multi:softmax',  # For multiclass classification
-            'num_class': len(set(y_train)),  # Number of classes
-            'max_depth': 3,  # Maximum depth of trees
-            'learning_rate': 0.1,  # Learning rate
-            'n_estimators': 100  # Number of boosting rounds
-        }
-        model = xgb.train(params, dtrain)
-        y_pred = model.predict(dtest)
-        # Evaluate the model
-        accuracy = accuracy_score(y_test, y_pred)
-        print(f"Accuracy: {accuracy:.2f}")
+        )
 
-        # Generate a classification report
-        report = classification_report(y_test, y_pred)
-        print("Classification Report:\n", report)
+        results = fit_and_evaluate(xgb_model, x_train, x_test, y_train, y_test, feature_names)
 
-        # Plot feature importance (if needed)
-        plot_importance(model)
+        importances = xgb_model.feature_importances_
+
+        # Sort the features by importance in descending order
+        indices = importances.argsort()[::-1]
+
+        # Print the feature ranking
+        print("XGBoost Feature ranking:")
+        for i in range(x_train.shape[1]):
+            print("%d. feature %s (%f)" % (i + 1, feature_names[indices[i]], importances[indices[i]]))
+
+        return results
+
+
+def create_graphic(tree_results, forest_results, neural_results, xgboost_results):
+    # Substitua esses valores pelas suas métricas
+    tree_results = json.loads(tree_results)
+    forest_results = json.loads(forest_results)
+    neural_results = json.loads(neural_results)
+    xgboost_results = json.loads(xgboost_results)
+
+    NN = [neural_results['precision'], neural_results['recall'], neural_results['f1_score']]  # NeuralNetwork
+    RF = [forest_results['precision'], forest_results['recall'], forest_results['f1_score']]  # Random Forest
+    DT = [tree_results['precision'], tree_results['recall'], tree_results['f1_score']]  # DecisionTree
+    XGB = [xgboost_results['precision'], xgboost_results['recall'], xgboost_results['f1_score']]  # XGBoost
+
+    # Crie uma lista com os nomes das métricas
+    labels = ['Precision', 'Recall', 'F1 Score']
+
+    # Configurando a posição das barras no eixo X
+    barWidth = 0.2  # Ajuste a largura para acomodar a barra adicional
+    r1 = np.arange(len(NN))
+    r2 = [x + barWidth for x in r1]
+    r3 = [x + barWidth for x in r2]
+    r4 = [x + barWidth for x in r3]  # Adicione uma nova posição para XGBoost
+
+    # Criando as barras
+    plt.figure(figsize=(10, 6))  # Ajuste o tamanho do gráfico conforme necessário
+    bar1 = plt.bar(r1, NN, color='b', width=barWidth, edgecolor='grey', label='NeuralNetwork')
+    bar2 = plt.bar(r2, RF, color='g', width=barWidth, edgecolor='grey', label='RandomForest')
+    bar3 = plt.bar(r3, DT, color='r', width=barWidth, edgecolor='grey', label='DecisionTree')
+    bar4 = plt.bar(r4, XGB, color='y', width=barWidth, edgecolor='grey',
+                   label='XGBoost')  # Adicione a barra para XGBoost
+
+    # Função para adicionar valor em cima da barra
+    def add_values_on_bars(bars):
+        for bar in bars:
+            yval = bar.get_height()
+            plt.text(bar.get_x() + bar.get_width() / 2.0, yval, round(yval, 2), ha='center', va='bottom')
+
+    # Adicionar valores nas barras
+    add_values_on_bars(bar1)
+    add_values_on_bars(bar2)
+    add_values_on_bars(bar3)
+    add_values_on_bars(bar4)  # Adicione valores para as barras XGBoost
+
+    # Adicionando os nomes para o eixo X
+    plt.xlabel('Métricas', fontweight='bold')
+    plt.xticks([r + barWidth for r in range(len(NN))], labels)
+
+    # Criando a legenda do gráfico
+    plt.legend(loc='lower center', bbox_to_anchor=(0.5, 1.05), ncol=4)  # Ajuste o número de colunas na legenda
+
+    plt.savefig('graphic_results.png')
+    # Exibindo o gráfico
+    plt.show()
 
 
 if __name__ == '__main__':
-    #decision_tree_grid_search()
-    #mpl()
-    xgboost()
-    # tree_results = decision_tree()
-    #random_forest_grid_search()
-# forest_results = random_forest()
-#
-# results = [tree_results, forest_results]
-#
-# with open('results.json', 'w') as f:
-#     # Use json.dump to write the results list to a file
-#     json.dump(results, f, indent=4)
+    # decision_tree_grid_search()
+    # mlp_random_search()
+    # xgboost_random_search()
+    # random_forest_grid_search()
+
+    mlp_results = mlp()
+    tree_results = decision_tree()
+    forest_results = random_forest()
+    xgboost_results = xgboost()
+
+    results = [tree_results, forest_results, xgboost_results, mlp_results]
+
+    create_graphic(tree_results, forest_results, mlp_results, xgboost_results)
+
+with open('results.json', 'w') as f:
+    # Use json.dump to write the results list to a file
+    json.dump(results, f, indent=4)
