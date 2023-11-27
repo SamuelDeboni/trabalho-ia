@@ -514,7 +514,7 @@ def create_graphic(tree_results, forest_results, neural_results, xgboost_results
 if __name__ == '__main__':
     # decision_tree_grid_search()
     # mlp_random_search()
-    xgboost_random_search()
+    #xgboost_random_search()
     # random_forest_grid_search()
 
     mlp_results = mlp()
