@@ -101,22 +101,22 @@ def fit_and_evaluate(model, x_train, x_test, y_train, y_test, feature_names):
 
     # accuracy = accuracy_score(y_test, y_pred)
 
-    class_report = ClassificationReport(model, classes=["Low Efficiency", "Medium Efficiency", "High Efficiency"])
+    class_report = ClassificationReport(model, classes=["Low Efficiency", "High Efficiency"])
     class_report.fit(x_train, y_train)
     class_report.score(x_test, y_test)
     class_report.show(outpath=f"{model.__class__.__name__}_class_report.png", clear_figure=True)
 
-    prc = PrecisionRecallCurve(model, classes=["Low Efficiency", "Medium Efficiency", "High Efficiency"])
+    prc = PrecisionRecallCurve(model, classes=["Low Efficiency", "High Efficiency"])
     prc.fit(x_train, y_train)
     prc.score(x_test, y_test)
     prc.show(outpath=f"{model.__class__.__name__}_precision_recall_curve.png", clear_figure=True)
 
-    roc = ROCAUC(model, classes=["Low Efficiency", "Medium Efficiency", "High Efficiency"])
+    roc = ROCAUC(model, classes=["Low Efficiency", "High Efficiency"])
     roc.fit(x_train, y_train)
     roc.score(x_test, y_test)
     roc.show(outpath=f"{model.__class__.__name__}_roc.png", clear_figure=True)
 
-    cm = ConfusionMatrix(model, classes=["Low Efficiency", "Medium Efficiency", "High Efficiency"])
+    cm = ConfusionMatrix(model, classes=["Low Efficiency", "High Efficiency"])
     cm.fit(x_train, y_train)
     cm.score(x_test, y_test)
     cm.show(outpath=f"{model.__class__.__name__}_confusion_matrix.png")
@@ -326,13 +326,12 @@ def mlp_random_search():
 
     # Defina o espaço de parâmetros para a busca aleatória
     param_distributions = {
-        'hidden_layer_sizes': [(50,), (100,), (50, 50), (100, 100), (50, 50, 50), (100, 100, 100)],
+        'hidden_layer_sizes': [(10,), (5,), (2,), (3, 2), (4, 2), (5, 1), (5, 2), (5, 3, 1), (5, 2, 1)],
         'activation': ['tanh', 'relu'],
         'solver': ['sgd', 'adam'],
         'alpha': [0.0001, 0.001, 0.01],
         'learning_rate_init': [0.0001, 0.001, 0.01, 0.1],
-        'max_iter': randint(400, 800),  # Increased max_iter range
-        'early_stopping': [True, False],  # Include early stopping
+        'max_iter': [400, 500, 600, 700, 800],  # Increased max_iter range
         # Include momentum for sgd
         'momentum': [0.9, 0.95, 0.99] if 'solver' == 'sgd' else [0.0]  # Only for sgd solver
     }
@@ -364,13 +363,13 @@ def mlp():
         feature_names, x_train, x_test, y_train, y_test = pickle.load(f)
 
         mlp_model = MLPClassifier(
-            hidden_layer_sizes={50},
-            max_iter=683,
+            hidden_layer_sizes={5, 2, 1},
+            max_iter=600,
             activation='tanh',
-            alpha=0.01,
+            alpha=0.001,
             learning_rate_init=0.01,
             solver='adam',
-            random_state=1
+            random_state=42,
         )
 
     result = fit_and_evaluate(mlp_model, x_train, x_test, y_train, y_test, feature_names)
@@ -391,23 +390,23 @@ def xgboost_random_search():
         feature_names, x_train, x_test, y_train, y_test = pickle.load(f)
 
         param_dist = {
-            'max_depth': [3, 5, 7, 9],
-            'learning_rate': [0.01, 0.1, 0.2],
-            'n_estimators': [50, 100, 200],
-            'subsample': [0.5, 0.7, 1.0],
-            'colsample_bytree': [0.3, 0.7, 1.0],  # Fração de colunas a serem usadas por árvore
-            'min_child_weight': [1, 3, 5],  # Peso mínimo necessário para criar um novo nó na árvore
-            'gamma': [0, 0.1, 0.2],  # Parâmetro de poda da árvore
-            'reg_alpha': [0, 0.1, 1],  # Regularização L1
-            'reg_lambda': [1, 1.5, 2],  # Regularização L2
+            'max_depth': [3, 4, 5, 6, 7, 9, 10],
+            'learning_rate': [0.01, 0.05, 0.1, 0.2, 0.3],
+            'n_estimators': [50, 100, 200, 400, 500, 600, 800],
+            'subsample': [0.5, 0.6, 0.7, 0.8, 0.9, 1.0],
+            'colsample_bytree': [0.3, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0],  # Fração de colunas a serem usadas por árvore
+            'min_child_weight': [1, 2, 3, 4, 5],  # Peso mínimo necessário para criar um novo nó na árvore
+            'gamma': [0, 0.1, 0.2, 0.3, 0.4, 0.5],  # Parâmetro de poda da árvore
+            'reg_alpha': [0, 0.1, 0.5, 1],  # Regularização L1
+            'reg_lambda': [0, 0.1, 0.5, 1, 1.5, 2],  # Regularização L2
         }
 
-        xgb_model = xgb.XGBClassifier(objective='multi:softmax', num_class=len(set(y_train)))
+        xgb_model = xgb.XGBClassifier(objective='multi:softmax', num_class=len(set(y_train)), verbosity=2)
 
         grid_search = RandomizedSearchCV(
             xgb_model,
             param_distributions=param_dist,
-            cv=30,
+            cv=20,
             n_iter=300,
             scoring='accuracy',
             n_jobs=-1
@@ -432,16 +431,15 @@ def xgboost():
         xgb_model = xgb.XGBClassifier(
             objective='multi:softmax',
             num_class=len(set(y_train)),
-            colsample_bytree=0.7,
-            gamma=0,
-            learning_rate=0.1,
-            max_depth=5,
-            min_child_weight=1,
-            n_estimators=50,
-            reg_alpha=0.1,
-            reg_lambda=1,
-            subsample=0.7,
-
+            colsample_bytree=1.0,
+            gamma=0.4,
+            learning_rate=0.3,
+            max_depth=9,
+            min_child_weight=3,
+            n_estimators=100,
+            reg_alpha=0.5,
+            reg_lambda=0.5,
+            subsample=1
         )
 
         results = fit_and_evaluate(xgb_model, x_train, x_test, y_train, y_test, feature_names)
@@ -516,7 +514,7 @@ def create_graphic(tree_results, forest_results, neural_results, xgboost_results
 if __name__ == '__main__':
     # decision_tree_grid_search()
     # mlp_random_search()
-    # xgboost_random_search()
+    xgboost_random_search()
     # random_forest_grid_search()
 
     mlp_results = mlp()
