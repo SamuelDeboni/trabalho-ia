@@ -1,6 +1,166 @@
-[
-    "{\"model_name\": \"DecisionTreeClassifier\", \"test_score\": 0.8527131782945736, \"precision\": 0.8961038961038961, \"recall\": 0.8625, \"f1_score\": 0.8789808917197451, \"precision_low_efficiency_values\": [0.75, 0.7142857142857143, 0.8181818181818182, 0.6, 0.9090909090909091, 0.6470588235294118, 0.7857142857142857, 0.5555555555555556, 1.0, 0.7777777777777778], \"precision_low_efficiency_std\": 0.1289784117341375, \"precision_low_efficiency_mean\": 0.7557664884135472, \"precision_low_efficiency_ic\": [0.658510009099102, 0.8530229677279925], \"precision_high_efficiency_values\": [0.8333333333333334, 0.7777777777777778, 0.7368421052631579, 0.9, 0.7894736842105263, 1.0, 0.8125, 0.8571428571428571, 0.8947368421052632, 0.75], \"precision_high_efficiency_std\": 0.07630497904411056, \"precision_high_efficiency_mean\": 0.8351806599832916, \"precision_high_efficiency_ic\": [0.777642708350813, 0.8927186116157703], \"recall_low_efficiency_values\": [0.75, 0.8823529411764706, 0.6428571428571429, 0.75, 0.7142857142857143, 1.0, 0.7857142857142857, 0.625, 0.8461538461538461, 0.8235294117647058], \"recall_low_efficiency_std\": 0.10681379816534421, \"recall_low_efficiency_mean\": 0.7819893341952164, \"recall_low_efficiency_ic\": [0.7014461346621151, 0.8625325337283177], \"recall_high_efficiency_values\": [0.8333333333333334, 0.5384615384615384, 0.875, 0.8181818181818182, 0.9375, 0.6842105263157895, 0.8125, 0.8181818181818182, 1.0, 0.6923076923076923], \"recall_high_efficiency_std\": 0.12643480788447842, \"recall_high_efficiency_mean\": 0.800967672678199, \"recall_high_efficiency_ic\": [0.7056292039196477, 0.8963061414367504], \"f1_low_efficiency_values\": [0.75, 0.7894736842105262, 0.7200000000000001, 0.6666666666666665, 0.8, 0.7857142857142858, 0.7857142857142857, 0.5882352941176471, 0.9166666666666666, 0.7999999999999999], \"f1_low_efficiency_std\": 0.08357583757080508, \"f1_low_efficiency_mean\": 0.7602470883090078, \"f1_low_efficiency_ic\": [0.6972265284447163, 0.8232676481732992], \"f1_high_efficiency_values\": [0.8333333333333334, 0.6363636363636364, 0.7999999999999999, 0.8571428571428572, 0.8571428571428572, 0.8125000000000001, 0.8125, 0.8372093023255814, 0.9444444444444444, 0.7199999999999999], \"f1_high_efficiency_std\": 0.07883893111248537, \"f1_high_efficiency_mean\": 0.8110636430752711, \"f1_high_efficiency_ic\": [0.7516149588356204, 0.8705123273149219]}",
-    "{\"model_name\": \"RandomForestClassifier\", \"test_score\": 0.8527131782945736, \"precision\": 0.8961038961038961, \"recall\": 0.8625, \"f1_score\": 0.8789808917197451, \"precision_low_efficiency_values\": [0.6923076923076923, 0.875, 0.8, 0.7, 0.9166666666666666, 0.6428571428571429, 0.9230769230769231, 0.6, 1.0, 0.8421052631578947], \"precision_low_efficiency_std\": 0.12745274648279434, \"precision_low_efficiency_mean\": 0.799201368806632, \"precision_low_efficiency_ic\": [0.7030953210176103, 0.8953074165956536], \"precision_high_efficiency_values\": [0.8235294117647058, 0.7857142857142857, 0.8666666666666667, 0.95, 0.8333333333333334, 0.875, 0.8823529411764706, 0.9, 0.85, 0.9090909090909091], \"precision_high_efficiency_std\": 0.04468303655185873, \"precision_high_efficiency_mean\": 0.8675687547746371, \"precision_high_efficiency_ic\": [0.8338754043783689, 0.9012621051709053], \"recall_low_efficiency_values\": [0.75, 0.8235294117647058, 0.8571428571428571, 0.875, 0.7857142857142857, 0.8181818181818182, 0.8571428571428571, 0.75, 0.7692307692307693, 0.9411764705882353], \"recall_low_efficiency_std\": 0.058277926427557705, \"recall_low_efficiency_mean\": 0.8227118469765529, \"recall_low_efficiency_ic\": [0.7787672374106221, 0.8666564565424836], \"recall_high_efficiency_values\": [0.7777777777777778, 0.8461538461538461, 0.8125, 0.8636363636363636, 0.9375, 0.7368421052631579, 0.9375, 0.8181818181818182, 1.0, 0.7692307692307693], \"recall_high_efficiency_std\": 0.08060786022075304, \"recall_high_efficiency_mean\": 0.8499322680243735, \"recall_high_efficiency_ic\": [0.7891497185671731, 0.9107148174815739], \"f1_low_efficiency_values\": [0.7199999999999999, 0.8484848484848485, 0.8275862068965518, 0.7777777777777777, 0.8461538461538461, 0.7200000000000001, 0.888888888888889, 0.6666666666666665, 0.8695652173913044, 0.8888888888888888], \"f1_low_efficiency_std\": 0.07527523968973292, \"f1_low_efficiency_mean\": 0.8054012341148773, \"f1_low_efficiency_ic\": [0.7486397599011525, 0.8621627083286021], \"f1_high_efficiency_values\": [0.7999999999999999, 0.8148148148148148, 0.8387096774193549, 0.9047619047619048, 0.8823529411764706, 0.7999999999999999, 0.9090909090909091, 0.8571428571428572, 0.9189189189189189, 0.8333333333333333], \"f1_high_efficiency_std\": 0.04316458963605969, \"f1_high_efficiency_mean\": 0.8559125356658563, \"f1_high_efficiency_ic\": [0.8233641737918603, 0.8884608975398524]}",
-    "{\"model_name\": \"XGBClassifier\", \"test_score\": 0.8372093023255814, \"precision\": 0.8734177215189873, \"recall\": 0.8625, \"f1_score\": 0.8679245283018868, \"precision_low_efficiency_values\": [0.6923076923076923, 1.0, 0.6923076923076923, 0.6363636363636364, 0.9230769230769231, 0.6666666666666666, 0.8, 0.6, 0.8888888888888888, 0.9375], \"precision_low_efficiency_std\": 0.1367669736304061, \"precision_low_efficiency_mean\": 0.7837111499611499, \"precision_low_efficiency_ic\": [0.680581686953006, 0.8868406129692937], \"precision_high_efficiency_values\": [0.8235294117647058, 0.7647058823529411, 0.7058823529411765, 0.9473684210526315, 0.8823529411764706, 0.9333333333333333, 0.8666666666666667, 0.9, 0.7619047619047619, 0.8571428571428571], \"precision_high_efficiency_std\": 0.07515372036345845, \"precision_high_efficiency_mean\": 0.8442886628335545, \"precision_high_efficiency_ic\": [0.7876188205579442, 0.9009585051091649], \"recall_low_efficiency_values\": [0.75, 0.7647058823529411, 0.6428571428571429, 0.875, 0.8571428571428571, 0.9090909090909091, 0.8571428571428571, 0.75, 0.6153846153846154, 0.8823529411764706], \"recall_low_efficiency_std\": 0.0974335825365009, \"recall_low_efficiency_mean\": 0.7903677205147794, \"recall_low_efficiency_ic\": [0.7168976949726258, 0.8638377460569331], \"recall_high_efficiency_values\": [0.7777777777777778, 1.0, 0.75, 0.8181818181818182, 0.9375, 0.7368421052631579, 0.8125, 0.8181818181818182, 0.9411764705882353, 0.9230769230769231], \"recall_high_efficiency_std\": 0.08673996831665806, \"recall_high_efficiency_mean\": 0.8515236913069731, \"recall_high_efficiency_ic\": [0.7861172110991549, 0.9169301715147914], \"f1_low_efficiency_values\": [0.7199999999999999, 0.8666666666666666, 0.6666666666666666, 0.7368421052631579, 0.888888888888889, 0.7692307692307692, 0.8275862068965518, 0.6666666666666665, 0.7272727272727274, 0.9090909090909091], \"f1_low_efficiency_std\": 0.08502939108653618, \"f1_low_efficiency_mean\": 0.7778911606643003, \"f1_low_efficiency_ic\": [0.713774545300996, 0.8420077760276046], \"f1_high_efficiency_values\": [0.7999999999999999, 0.8666666666666666, 0.7272727272727272, 0.8780487804878049, 0.9090909090909091, 0.8235294117647058, 0.8387096774193549, 0.8571428571428572, 0.8421052631578947, 0.888888888888889], \"f1_high_efficiency_std\": 0.04909404041879835, \"f1_high_efficiency_mean\": 0.8431455181891808, \"f1_high_efficiency_ic\": [0.8061260397954206, 0.880164996582941]}",
-    "{\"model_name\": \"MLPClassifier\", \"test_score\": 0.7751937984496124, \"precision\": 0.8695652173913043, \"recall\": 0.75, \"f1_score\": 0.8053691275167786, \"precision_low_efficiency_values\": [0.625, 0.8095238095238095, 0.7222222222222222, 0.5714285714285714, 0.8461538461538461, 0.6470588235294118, 0.8235294117647058, 0.35294117647058826, 0.8461538461538461, 0.7894736842105263], \"precision_low_efficiency_std\": 0.14959021408429962, \"precision_low_efficiency_mean\": 0.7033485391457528, \"precision_low_efficiency_ic\": [0.5905496810568339, 0.8161473972346717], \"precision_high_efficiency_values\": [0.8571428571428571, 1.0, 0.9166666666666666, 1.0, 0.8235294117647058, 1.0, 1.0, 0.8461538461538461, 0.8823529411764706, 0.8181818181818182], \"precision_high_efficiency_std\": 0.07469465303671115, \"precision_high_efficiency_mean\": 0.9144027541086365, \"precision_high_efficiency_ic\": [0.85807907264682, 0.9707264355704529], \"recall_low_efficiency_values\": [0.8333333333333334, 1.0, 0.9285714285714286, 1.0, 0.7857142857142857, 1.0, 1.0, 0.75, 0.8461538461538461, 0.8823529411764706], \"recall_low_efficiency_std\": 0.09163218130592397, \"recall_low_efficiency_mean\": 0.9026125834949366, \"recall_low_efficiency_ic\": [0.8335171184020108, 0.9717080485878623], \"recall_high_efficiency_values\": [0.6666666666666666, 0.6923076923076923, 0.6875, 0.7272727272727273, 0.875, 0.6842105263157895, 0.8125, 0.5, 0.8823529411764706, 0.6923076923076923], \"recall_high_efficiency_std\": 0.10680236625183977, \"recall_high_efficiency_mean\": 0.7220118246047039, \"recall_high_efficiency_ic\": [0.6414772453332752, 0.8025464038761326], \"f1_low_efficiency_values\": [0.7142857142857143, 0.8947368421052632, 0.8125000000000001, 0.7272727272727273, 0.8148148148148148, 0.7857142857142858, 0.9032258064516129, 0.48, 0.8461538461538461, 0.8333333333333333], \"f1_low_efficiency_std\": 0.11617010601586385, \"f1_low_efficiency_mean\": 0.7812037370131597, \"f1_low_efficiency_ic\": [0.6936053912064375, 0.8688020828198819], \"f1_high_efficiency_values\": [0.75, 0.8181818181818181, 0.7857142857142857, 0.8421052631578948, 0.8484848484848485, 0.8125000000000001, 0.896551724137931, 0.6285714285714286, 0.8823529411764706, 0.7500000000000001], \"f1_high_efficiency_std\": 0.07435430416614609, \"f1_high_efficiency_mean\": 0.8014462309424678, \"f1_high_efficiency_ic\": [0.7453791903591113, 0.8575132715258243]}"
-]
+{
+    "model_results": [
+        "{\"model_name\": \"DecisionTreeClassifier\", \"test_score\": 0.8527131782945736, \"precision\": 0.8961038961038961, \"recall\": 0.8625, \"f1_score\": 0.8789808917197451, \"precision_low_efficiency_values\": [0.75, 0.7142857142857143, 0.8181818181818182, 0.6, 0.9090909090909091, 0.6470588235294118, 0.7857142857142857, 0.5555555555555556, 1.0, 0.7777777777777778], \"precision_low_efficiency_std\": 0.1289784117341375, \"precision_low_efficiency_mean\": 0.7557664884135472, \"precision_low_efficiency_ic\": [0.658510009099102, 0.8530229677279925], \"precision_high_efficiency_values\": [0.8333333333333334, 0.7777777777777778, 0.7368421052631579, 0.9, 0.7894736842105263, 1.0, 0.8125, 0.8571428571428571, 0.8947368421052632, 0.75], \"precision_high_efficiency_std\": 0.07630497904411056, \"precision_high_efficiency_mean\": 0.8351806599832916, \"precision_high_efficiency_ic\": [0.777642708350813, 0.8927186116157703], \"recall_low_efficiency_values\": [0.75, 0.8823529411764706, 0.6428571428571429, 0.75, 0.7142857142857143, 1.0, 0.7857142857142857, 0.625, 0.8461538461538461, 0.8235294117647058], \"recall_low_efficiency_std\": 0.10681379816534421, \"recall_low_efficiency_mean\": 0.7819893341952164, \"recall_low_efficiency_ic\": [0.7014461346621151, 0.8625325337283177], \"recall_high_efficiency_values\": [0.8333333333333334, 0.5384615384615384, 0.875, 0.8181818181818182, 0.9375, 0.6842105263157895, 0.8125, 0.8181818181818182, 1.0, 0.6923076923076923], \"recall_high_efficiency_std\": 0.12643480788447842, \"recall_high_efficiency_mean\": 0.800967672678199, \"recall_high_efficiency_ic\": [0.7056292039196477, 0.8963061414367504], \"f1_low_efficiency_values\": [0.75, 0.7894736842105262, 0.7200000000000001, 0.6666666666666665, 0.8, 0.7857142857142858, 0.7857142857142857, 0.5882352941176471, 0.9166666666666666, 0.7999999999999999], \"f1_low_efficiency_std\": 0.08357583757080508, \"f1_low_efficiency_mean\": 0.7602470883090078, \"f1_low_efficiency_ic\": [0.6972265284447163, 0.8232676481732992], \"f1_high_efficiency_values\": [0.8333333333333334, 0.6363636363636364, 0.7999999999999999, 0.8571428571428572, 0.8571428571428572, 0.8125000000000001, 0.8125, 0.8372093023255814, 0.9444444444444444, 0.7199999999999999], \"f1_high_efficiency_std\": 0.07883893111248537, \"f1_high_efficiency_mean\": 0.8110636430752711, \"f1_high_efficiency_ic\": [0.7516149588356204, 0.8705123273149219]}",
+        "{\"model_name\": \"RandomForestClassifier\", \"test_score\": 0.8527131782945736, \"precision\": 0.8961038961038961, \"recall\": 0.8625, \"f1_score\": 0.8789808917197451, \"precision_low_efficiency_values\": [0.6923076923076923, 0.875, 0.8, 0.7, 0.9166666666666666, 0.6428571428571429, 0.9230769230769231, 0.6, 1.0, 0.8421052631578947], \"precision_low_efficiency_std\": 0.12745274648279434, \"precision_low_efficiency_mean\": 0.799201368806632, \"precision_low_efficiency_ic\": [0.7030953210176103, 0.8953074165956536], \"precision_high_efficiency_values\": [0.8235294117647058, 0.7857142857142857, 0.8666666666666667, 0.95, 0.8333333333333334, 0.875, 0.8823529411764706, 0.9, 0.85, 0.9090909090909091], \"precision_high_efficiency_std\": 0.04468303655185873, \"precision_high_efficiency_mean\": 0.8675687547746371, \"precision_high_efficiency_ic\": [0.8338754043783689, 0.9012621051709053], \"recall_low_efficiency_values\": [0.75, 0.8235294117647058, 0.8571428571428571, 0.875, 0.7857142857142857, 0.8181818181818182, 0.8571428571428571, 0.75, 0.7692307692307693, 0.9411764705882353], \"recall_low_efficiency_std\": 0.058277926427557705, \"recall_low_efficiency_mean\": 0.8227118469765529, \"recall_low_efficiency_ic\": [0.7787672374106221, 0.8666564565424836], \"recall_high_efficiency_values\": [0.7777777777777778, 0.8461538461538461, 0.8125, 0.8636363636363636, 0.9375, 0.7368421052631579, 0.9375, 0.8181818181818182, 1.0, 0.7692307692307693], \"recall_high_efficiency_std\": 0.08060786022075304, \"recall_high_efficiency_mean\": 0.8499322680243735, \"recall_high_efficiency_ic\": [0.7891497185671731, 0.9107148174815739], \"f1_low_efficiency_values\": [0.7199999999999999, 0.8484848484848485, 0.8275862068965518, 0.7777777777777777, 0.8461538461538461, 0.7200000000000001, 0.888888888888889, 0.6666666666666665, 0.8695652173913044, 0.8888888888888888], \"f1_low_efficiency_std\": 0.07527523968973292, \"f1_low_efficiency_mean\": 0.8054012341148773, \"f1_low_efficiency_ic\": [0.7486397599011525, 0.8621627083286021], \"f1_high_efficiency_values\": [0.7999999999999999, 0.8148148148148148, 0.8387096774193549, 0.9047619047619048, 0.8823529411764706, 0.7999999999999999, 0.9090909090909091, 0.8571428571428572, 0.9189189189189189, 0.8333333333333333], \"f1_high_efficiency_std\": 0.04316458963605969, \"f1_high_efficiency_mean\": 0.8559125356658563, \"f1_high_efficiency_ic\": [0.8233641737918603, 0.8884608975398524]}",
+        "{\"model_name\": \"XGBClassifier\", \"test_score\": 0.8372093023255814, \"precision\": 0.8734177215189873, \"recall\": 0.8625, \"f1_score\": 0.8679245283018868, \"precision_low_efficiency_values\": [0.6923076923076923, 1.0, 0.6923076923076923, 0.6363636363636364, 0.9230769230769231, 0.6666666666666666, 0.8, 0.6, 0.8888888888888888, 0.9375], \"precision_low_efficiency_std\": 0.1367669736304061, \"precision_low_efficiency_mean\": 0.7837111499611499, \"precision_low_efficiency_ic\": [0.680581686953006, 0.8868406129692937], \"precision_high_efficiency_values\": [0.8235294117647058, 0.7647058823529411, 0.7058823529411765, 0.9473684210526315, 0.8823529411764706, 0.9333333333333333, 0.8666666666666667, 0.9, 0.7619047619047619, 0.8571428571428571], \"precision_high_efficiency_std\": 0.07515372036345845, \"precision_high_efficiency_mean\": 0.8442886628335545, \"precision_high_efficiency_ic\": [0.7876188205579442, 0.9009585051091649], \"recall_low_efficiency_values\": [0.75, 0.7647058823529411, 0.6428571428571429, 0.875, 0.8571428571428571, 0.9090909090909091, 0.8571428571428571, 0.75, 0.6153846153846154, 0.8823529411764706], \"recall_low_efficiency_std\": 0.0974335825365009, \"recall_low_efficiency_mean\": 0.7903677205147794, \"recall_low_efficiency_ic\": [0.7168976949726258, 0.8638377460569331], \"recall_high_efficiency_values\": [0.7777777777777778, 1.0, 0.75, 0.8181818181818182, 0.9375, 0.7368421052631579, 0.8125, 0.8181818181818182, 0.9411764705882353, 0.9230769230769231], \"recall_high_efficiency_std\": 0.08673996831665806, \"recall_high_efficiency_mean\": 0.8515236913069731, \"recall_high_efficiency_ic\": [0.7861172110991549, 0.9169301715147914], \"f1_low_efficiency_values\": [0.7199999999999999, 0.8666666666666666, 0.6666666666666666, 0.7368421052631579, 0.888888888888889, 0.7692307692307692, 0.8275862068965518, 0.6666666666666665, 0.7272727272727274, 0.9090909090909091], \"f1_low_efficiency_std\": 0.08502939108653618, \"f1_low_efficiency_mean\": 0.7778911606643003, \"f1_low_efficiency_ic\": [0.713774545300996, 0.8420077760276046], \"f1_high_efficiency_values\": [0.7999999999999999, 0.8666666666666666, 0.7272727272727272, 0.8780487804878049, 0.9090909090909091, 0.8235294117647058, 0.8387096774193549, 0.8571428571428572, 0.8421052631578947, 0.888888888888889], \"f1_high_efficiency_std\": 0.04909404041879835, \"f1_high_efficiency_mean\": 0.8431455181891808, \"f1_high_efficiency_ic\": [0.8061260397954206, 0.880164996582941]}",
+        "{\"model_name\": \"MLPClassifier\", \"test_score\": 0.7751937984496124, \"precision\": 0.8695652173913043, \"recall\": 0.75, \"f1_score\": 0.8053691275167786, \"precision_low_efficiency_values\": [0.625, 0.8095238095238095, 0.7222222222222222, 0.5714285714285714, 0.8461538461538461, 0.6470588235294118, 0.8235294117647058, 0.35294117647058826, 0.8461538461538461, 0.7894736842105263], \"precision_low_efficiency_std\": 0.14959021408429962, \"precision_low_efficiency_mean\": 0.7033485391457528, \"precision_low_efficiency_ic\": [0.5905496810568339, 0.8161473972346717], \"precision_high_efficiency_values\": [0.8571428571428571, 1.0, 0.9166666666666666, 1.0, 0.8235294117647058, 1.0, 1.0, 0.8461538461538461, 0.8823529411764706, 0.8181818181818182], \"precision_high_efficiency_std\": 0.07469465303671115, \"precision_high_efficiency_mean\": 0.9144027541086365, \"precision_high_efficiency_ic\": [0.85807907264682, 0.9707264355704529], \"recall_low_efficiency_values\": [0.8333333333333334, 1.0, 0.9285714285714286, 1.0, 0.7857142857142857, 1.0, 1.0, 0.75, 0.8461538461538461, 0.8823529411764706], \"recall_low_efficiency_std\": 0.09163218130592397, \"recall_low_efficiency_mean\": 0.9026125834949366, \"recall_low_efficiency_ic\": [0.8335171184020108, 0.9717080485878623], \"recall_high_efficiency_values\": [0.6666666666666666, 0.6923076923076923, 0.6875, 0.7272727272727273, 0.875, 0.6842105263157895, 0.8125, 0.5, 0.8823529411764706, 0.6923076923076923], \"recall_high_efficiency_std\": 0.10680236625183977, \"recall_high_efficiency_mean\": 0.7220118246047039, \"recall_high_efficiency_ic\": [0.6414772453332752, 0.8025464038761326], \"f1_low_efficiency_values\": [0.7142857142857143, 0.8947368421052632, 0.8125000000000001, 0.7272727272727273, 0.8148148148148148, 0.7857142857142858, 0.9032258064516129, 0.48, 0.8461538461538461, 0.8333333333333333], \"f1_low_efficiency_std\": 0.11617010601586385, \"f1_low_efficiency_mean\": 0.7812037370131597, \"f1_low_efficiency_ic\": [0.6936053912064375, 0.8688020828198819], \"f1_high_efficiency_values\": [0.75, 0.8181818181818181, 0.7857142857142857, 0.8421052631578948, 0.8484848484848485, 0.8125000000000001, 0.896551724137931, 0.6285714285714286, 0.8823529411764706, 0.7500000000000001], \"f1_high_efficiency_std\": 0.07435430416614609, \"f1_high_efficiency_mean\": 0.8014462309424678, \"f1_high_efficiency_ic\": [0.7453791903591113, 0.8575132715258243]}"
+    ],
+    "comparison_results": {
+        "precision_high_efficiency": {
+            "DecisionTreeClassifier vs RandomForestClassifier (High Efficiency)": {
+                "t_statistic": -1.0988297140541308,
+                "p_value": 0.2863231144690515
+            },
+            "DecisionTreeClassifier vs XGBClassifier (High Efficiency)": {
+                "t_statistic": -0.25512477893528956,
+                "p_value": 0.801518991107661
+            },
+            "DecisionTreeClassifier vs MLPClassifier (High Efficiency)": {
+                "t_statistic": -2.2257787245798397,
+                "p_value": 0.03904595639683824
+            },
+            "RandomForestClassifier vs XGBClassifier (High Efficiency)": {
+                "t_statistic": 0.7987796425554949,
+                "p_value": 0.43483191093205376
+            },
+            "RandomForestClassifier vs MLPClassifier (High Efficiency)": {
+                "t_statistic": -1.6142336196612634,
+                "p_value": 0.12386972960248169
+            },
+            "XGBClassifier vs MLPClassifier (High Efficiency)": {
+                "t_statistic": -1.9851233198263598,
+                "p_value": 0.06258374010905156
+            }
+        },
+        "precision_low_efficiency": {
+            "DecisionTreeClassifier vs RandomForestClassifier (Low Efficiency)": {
+                "t_statistic": -0.7186152050731661,
+                "p_value": 0.4816030948575988
+            },
+            "DecisionTreeClassifier vs XGBClassifier (Low Efficiency)": {
+                "t_statistic": -0.4459466745248232,
+                "p_value": 0.6609534948478362
+            },
+            "DecisionTreeClassifier vs MLPClassifier (Low Efficiency)": {
+                "t_statistic": 0.7961565706121435,
+                "p_value": 0.43631603244736306
+            },
+            "RandomForestClassifier vs XGBClassifier (Low Efficiency)": {
+                "t_statistic": 0.24857583014471538,
+                "p_value": 0.8065028891948443
+            },
+            "RandomForestClassifier vs MLPClassifier (Low Efficiency)": {
+                "t_statistic": 1.46322796013014,
+                "p_value": 0.16064871420526441
+            },
+            "XGBClassifier vs MLPClassifier (Low Efficiency)": {
+                "t_statistic": 1.1894527430466564,
+                "p_value": 0.2497156223504537
+            }
+        },
+        "recall_high_efficiency": {
+            "DecisionTreeClassifier vs RandomForestClassifier (High Efficiency)": {
+                "t_statistic": -0.979653623195732,
+                "p_value": 0.3402416165764405
+            },
+            "DecisionTreeClassifier vs XGBClassifier (High Efficiency)": {
+                "t_statistic": -0.9891716464680337,
+                "p_value": 0.335690583655584
+            },
+            "DecisionTreeClassifier vs MLPClassifier (High Efficiency)": {
+                "t_statistic": 1.4311648922231919,
+                "p_value": 0.16951655276478267
+            },
+            "RandomForestClassifier vs XGBClassifier (High Efficiency)": {
+                "t_statistic": -0.040319070388612835,
+                "p_value": 0.9682825978225228
+            },
+            "RandomForestClassifier vs MLPClassifier (High Efficiency)": {
+                "t_statistic": 2.8680165802683786,
+                "p_value": 0.010227224041903885
+            },
+            "XGBClassifier vs MLPClassifier (High Efficiency)": {
+                "t_statistic": 2.823897966097125,
+                "p_value": 0.011245257170110613
+            }
+        },
+        "recall_low_efficiency": {
+            "DecisionTreeClassifier vs RandomForestClassifier (Low Efficiency)": {
+                "t_statistic": -1.0040242960253047,
+                "p_value": 0.3286740852087898
+            },
+            "DecisionTreeClassifier vs XGBClassifier (Low Efficiency)": {
+                "t_statistic": -0.17385317200150793,
+                "p_value": 0.8639211372129574
+            },
+            "DecisionTreeClassifier vs MLPClassifier (Low Efficiency)": {
+                "t_statistic": -2.5713298542595946,
+                "p_value": 0.019222057527830533
+            },
+            "RandomForestClassifier vs XGBClassifier (Low Efficiency)": {
+                "t_statistic": 0.8546663965391335,
+                "p_value": 0.4039681523729628
+            },
+            "RandomForestClassifier vs MLPClassifier (Low Efficiency)": {
+                "t_statistic": -2.207313712652197,
+                "p_value": 0.04051344633928182
+            },
+            "XGBClassifier vs MLPClassifier (Low Efficiency)": {
+                "t_statistic": -2.5175927302461374,
+                "p_value": 0.021506153924849572
+            }
+        },
+        "f1_high_efficiency": {
+            "DecisionTreeClassifier vs RandomForestClassifier (High Efficiency)": {
+                "t_statistic": -1.4969271181552113,
+                "p_value": 0.1517419452967558
+            },
+            "DecisionTreeClassifier vs XGBClassifier (High Efficiency)": {
+                "t_statistic": -1.0362898860684653,
+                "p_value": 0.31378903226918353
+            },
+            "DecisionTreeClassifier vs MLPClassifier (High Efficiency)": {
+                "t_statistic": 0.26623728710583966,
+                "p_value": 0.7930822523494041
+            },
+            "RandomForestClassifier vs XGBClassifier (High Efficiency)": {
+                "t_statistic": 0.5859001365714137,
+                "p_value": 0.5652175261076733
+            },
+            "RandomForestClassifier vs MLPClassifier (High Efficiency)": {
+                "t_statistic": 1.9005342358214745,
+                "p_value": 0.07350037798539792
+            },
+            "XGBClassifier vs MLPClassifier (High Efficiency)": {
+                "t_statistic": 1.4040184082612839,
+                "p_value": 0.17733228800657408
+            }
+        },
+        "f1_low_efficiency": {
+            "DecisionTreeClassifier vs RandomForestClassifier (Low Efficiency)": {
+                "t_statistic": -1.2043469351921814,
+                "p_value": 0.24405346330584032
+            },
+            "DecisionTreeClassifier vs XGBClassifier (Low Efficiency)": {
+                "t_statistic": -0.44396415352935925,
+                "p_value": 0.6623595306298279
+            },
+            "DecisionTreeClassifier vs MLPClassifier (Low Efficiency)": {
+                "t_statistic": -0.43931266191963264,
+                "p_value": 0.6656635101958421
+            },
+            "RandomForestClassifier vs XGBClassifier (Low Efficiency)": {
+                "t_statistic": 0.7267406392265857,
+                "p_value": 0.476730586052156
+            },
+            "RandomForestClassifier vs MLPClassifier (Low Efficiency)": {
+                "t_statistic": 0.5244123655752368,
+                "p_value": 0.6063902522218393
+            },
+            "XGBClassifier vs MLPClassifier (Low Efficiency)": {
+                "t_statistic": -0.0690295017517799,
+                "p_value": 0.9457272152623089
+            }
+        }
+    }
+}

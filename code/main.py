@@ -6,7 +6,7 @@ import numpy as np
 import pydotplus
 import scipy.stats as st
 import xgboost as xgb
-from scipy.stats import randint
+import scipy.stats as stats
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.inspection import permutation_importance
 from sklearn.metrics import f1_score, precision_score, recall_score, make_scorer
@@ -511,10 +511,51 @@ def create_graphic(tree_results, forest_results, neural_results, xgboost_results
     plt.show()
 
 
+def compare_efficiency_metrics(results):
+    # Estrutura para armazenar os pares de comparação e seus resultados
+    comparison_results = {}
+
+    # Convertendo strings JSON em dicionários
+    parsed_results = [json.loads(result) for result in results]
+
+    # Nomes dos algoritmos
+    algorithms = [result['model_name'] for result in parsed_results]
+
+    # Métricas para comparar
+    metrics = ['precision', 'recall', 'f1']
+
+    for metric in metrics:
+        comparison_results[f"{metric}_high_efficiency"] = {}
+        comparison_results[f"{metric}_low_efficiency"] = {}
+
+        # Comparando cada algoritmo com os outros
+        for i in range(len(algorithms)):
+            for j in range(i + 1, len(algorithms)):
+                alg1, alg2 = algorithms[i], algorithms[j]
+
+                # Comparação para alta eficiência
+                alg1_high_metrics = parsed_results[i][f"{metric}_high_efficiency_values"]
+                alg2_high_metrics = parsed_results[j][f"{metric}_high_efficiency_values"]
+                t_stat_high, p_value_high = stats.ttest_ind(alg1_high_metrics, alg2_high_metrics)
+                comparison_key_high = f"{alg1} vs {alg2} (High Efficiency)"
+                comparison_results[f"{metric}_high_efficiency"][comparison_key_high] = {'t_statistic': t_stat_high,
+                                                                                        'p_value': p_value_high}
+
+                # Comparação para baixa eficiência
+                alg1_low_metrics = parsed_results[i][f"{metric}_low_efficiency_values"]
+                alg2_low_metrics = parsed_results[j][f"{metric}_low_efficiency_values"]
+                t_stat_low, p_value_low = stats.ttest_ind(alg1_low_metrics, alg2_low_metrics)
+                comparison_key_low = f"{alg1} vs {alg2} (Low Efficiency)"
+                comparison_results[f"{metric}_low_efficiency"][comparison_key_low] = {'t_statistic': t_stat_low,
+                                                                                      'p_value': p_value_low}
+
+    return comparison_results
+
+
 if __name__ == '__main__':
     # decision_tree_grid_search()
     # mlp_random_search()
-    #xgboost_random_search()
+    # xgboost_random_search()
     # random_forest_grid_search()
 
     mlp_results = mlp()
@@ -524,8 +565,25 @@ if __name__ == '__main__':
 
     results = [tree_results, forest_results, xgboost_results, mlp_results]
 
+    print("\n")
+
+    comparison_results = compare_efficiency_metrics(results)
+
+    combined_results = {
+        'model_results': results,
+        'comparison_results': comparison_results
+    }
+
+    # Exemplo de como acessar os resultados
+    for metric in comparison_results:
+        print(f"Comparação para {metric}:")
+        for comparison in comparison_results[metric]:
+            print(
+                f"{comparison}: t-statistic = {comparison_results[metric][comparison]['t_statistic']}, p-value = {comparison_results[metric][comparison]['p_value']}")
+        print("\n")
+
     create_graphic(tree_results, forest_results, mlp_results, xgboost_results)
 
 with open('results.json', 'w') as f:
     # Use json.dump to write the results list to a file
-    json.dump(results, f, indent=4)
+    json.dump(combined_results, f, indent=4)
