@@ -432,13 +432,13 @@ def xgboost():
             objective='multi:softmax',
             num_class=len(set(y_train)),
             colsample_bytree=1.0,
-            gamma=0.4,
-            learning_rate=0.3,
-            max_depth=9,
-            min_child_weight=3,
-            n_estimators=100,
-            reg_alpha=0.5,
-            reg_lambda=0.5,
+            gamma=0.5,
+            learning_rate=0.05,
+            max_depth=10,
+            min_child_weight=5,
+            n_estimators=500,
+            reg_alpha=0,
+            reg_lambda=0,
             subsample=1
         )
 
